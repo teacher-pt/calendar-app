@@ -28,8 +28,35 @@
     margin-bottom: 6px;
 }
 
+.calendar-wrapper {
+    direction: rtl;
+    /* right-to-left layout */
+}
+
+.calendar__header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    padding: 6px 8px 0 8px;
+}
+
+.calendar__header-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    padding: 6px 8px;
+    color: #333;
+    background: transparent;
+    text-align: center;
+}
+
 @media (max-width: 700px) {
     .calendar {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .calendar__header {
         grid-template-columns: repeat(2, 1fr);
     }
 }
