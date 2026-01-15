@@ -51,6 +51,12 @@
     text-align: center;
 }
 
+.calendar__hebrew {
+    color: #777;
+    font-size: 0.8rem;
+    line-height: 1;
+}
+
 @media (max-width: 700px) {
     .calendar {
         grid-template-columns: repeat(2, 1fr);
