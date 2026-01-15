@@ -1,11 +1,38 @@
 import { useSelector } from "react-redux"
 
 import "./Calendar.css"
+import { useEffect, useState } from "react";
 
 const WEEKDAYS_HE = ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי", "שבת"]
 
 export default function Calendar() {
     const days = useSelector((state) => state.calendar.days);
+    const [daysToShow, setDaysToShow] = useState([]);
+
+    useEffect(() => {
+        const dates = Object.keys(days);
+
+        const firstDate = new Date(dates[0]);
+        const firstDay = firstDate.getDay();
+
+        const prevMonth = [];
+        for (let i = 0; i < firstDay; i++) {
+            firstDate.setDate(firstDate.getDate() - 1);
+            const key = firstDate.toDateString();
+            prevMonth.unshift([key, { hebrew: "" }]);
+        }
+
+        const lastDate = new Date(dates[dates.length - 1]);
+        const lastDay = lastDate.getDay();
+        const nextMonth = [];
+        for (let i = 0; i < 6 - lastDay; i++) {
+            lastDate.setDate(lastDate.getDate() + 1);
+            const key = lastDate.toDateString();
+            nextMonth.push([key, { hebrew: "" }]);
+        }
+
+        setDaysToShow([...prevMonth, ...Object.entries(days), ...nextMonth]);
+    }, [days]);
 
     return (
         <div className="calendar-wrapper" dir="rtl">
@@ -18,7 +45,7 @@ export default function Calendar() {
             </div>
 
             <div className="calendar">
-                {Object.entries(days).map(([date, info]) => (
+                {daysToShow.map(([date, info]) => (
                     <div key={date} className="calendar__cell" data-date={date}>
                         <div className="calendar__day-number">{new Date(date).getDate()}</div>
                         <div className="calendar__hebrew">{info.hebrew}</div>
