@@ -2,6 +2,7 @@ import { useSelector } from "react-redux"
 
 import "./Calendar.css"
 import { useEffect, useState } from "react";
+import Day from "./Day";
 
 const WEEKDAYS_HE = ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי", "שבת"]
 
@@ -45,12 +46,7 @@ export default function Calendar() {
             </div>
 
             <div className="calendar">
-                {daysToShow.map(([date, info]) => (
-                    <div key={date} className="calendar__cell" data-date={date}>
-                        <div className="calendar__day-number">{new Date(date).getDate()}</div>
-                        <div className="calendar__hebrew">{info.hebrew}</div>
-                    </div>
-                ))}
+                {daysToShow.map(([date, info]) => (<Day key={date} date={date} info={info} />))}
             </div>
         </div>
     )
