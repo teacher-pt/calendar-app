@@ -4,7 +4,7 @@ import Calendar from '../calendar/Calendar'
 function App() {
     return (
         <>
-            <h1>Hebrew Calendar App</h1>
+            <h1>לוח השנה שלי</h1>
             <Calendar />
         </>
     );
