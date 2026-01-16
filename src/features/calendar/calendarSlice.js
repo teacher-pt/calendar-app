@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSelector, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { data } from "../../../logs/data";
 import axios from "axios";
 
@@ -28,19 +28,6 @@ const calendarSlice = createSlice({
                 console.error("Failed to fetch dates:", action.error);
             });
     }
-});
-
-// export const monthName = calendarSlice.selectSlice(x=>x)
-const monthNumber = (state) => state.calendar.days[0]?.month || 1;
-
-export const getMonthName = createSelector(monthNumber, (monthNum) => {
-    console.log(monthNumber);
-
-    const monthNames = [
-        "ינואר", "פברואר", "מרץ", "אפריל", "מאי", "יוני",
-        "יולי", "אוגוסט", "ספטמבר", "אוקטובר", "נובמבר", "דצמבר"
-    ];
-    return monthNames[monthNum - 1] || "חודש לא ידוע";
 });
 
 export const fetchDates = createAsyncThunk(
