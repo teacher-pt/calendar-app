@@ -1,9 +1,8 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { data } from "../../../logs/data";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";;
 import axios from "axios";
 
 const initialState = {
-    days: data.hdates
+    days: { },
 };
 
 const calendarSlice = createSlice({
@@ -67,7 +66,9 @@ export const selectCurrentMonthName = (state) => {
         if (!Number.isNaN(dateObj.getTime())) {
             return dateObj.toLocaleString('he', { month: 'long' });
         }
-    } catch (e) { }
+    } catch (e) { 
+        console.error("Error parsing date:", e);
+    }
 
     // Fallbacks: prefer Hebrew month if present, or generic locale fallback
     if (entry && entry.heDateParts && entry.heDateParts.m) return entry.heDateParts.m;
