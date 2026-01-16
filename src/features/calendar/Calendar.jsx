@@ -1,14 +1,25 @@
-import { useSelector } from "react-redux"
+import { useParams } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 import "./Calendar.css"
-import { useEffect, useState } from "react";
 import Day from "./Day";
+import { fetchDates } from "./calendarSlice";
 
 const WEEKDAYS_HE = ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי", "שבת"]
 
 export default function Calendar() {
+    const { month, year } = useParams();
+
     const days = useSelector((state) => state.calendar.days);
+    // const monthName = useSelector((state) => state.calendar.monthName);
+    const dispatch = useDispatch();
     const [daysToShow, setDaysToShow] = useState([]);
+
+    useEffect(() => {
+        const currentMonth = { month: +month, year: +year };
+        dispatch(fetchDates(currentMonth));
+    }, [dispatch, month, year]);
 
     useEffect(() => {
         const dates = Object.keys(days);
@@ -37,6 +48,7 @@ export default function Calendar() {
 
     return (
         <div className="calendar-wrapper" dir="rtl">
+            {/* {monthName} */}
             <div className="calendar__header" aria-hidden>
                 {WEEKDAYS_HE.map((w, i) => (
                     <div key={i} className="calendar__header-cell">

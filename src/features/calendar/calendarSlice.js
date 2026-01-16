@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSelector, createSlice } from "@reduxjs/toolkit";
 import { data } from "../../../logs/data";
 import axios from "axios";
 
@@ -30,15 +30,28 @@ const calendarSlice = createSlice({
     }
 });
 
+// export const monthName = calendarSlice.selectSlice(x=>x)
+const monthNumber = (state) => state.calendar.days[0]?.month || 1;
+
+export const getMonthName = createSelector(monthNumber, (monthNum) => {
+    console.log(monthNumber);
+
+    const monthNames = [
+        "ינואר", "פברואר", "מרץ", "אפריל", "מאי", "יוני",
+        "יולי", "אוגוסט", "ספטמבר", "אוקטובר", "נובמבר", "דצמבר"
+    ];
+    return monthNames[monthNum - 1] || "חודש לא ידוע";
+});
+
 export const fetchDates = createAsyncThunk(
     "calendar/fetchDates",
     async ({ month, year }) => {
         const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
 
-        const startDate = new Date(year, month, 1);
+        const startDate = new Date(year, month - 1, 1);
         const formattedStartDate = startDate.toLocaleDateString('en-CA', options);
 
-        const endDate = new Date(year, month + 1, 0);
+        const endDate = new Date(year, month, 0);
         const formattedEndDate = endDate.toLocaleDateString('en-CA', options);
 
         const hebcalApiUrl = `https://www.hebcal.com/converter?cfg=json&start=${formattedStartDate}&end=${formattedEndDate}&g2h=1`;
