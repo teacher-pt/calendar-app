@@ -48,4 +48,48 @@ export const fetchDates = createAsyncThunk(
 );
 
 export const { addEvent, removeEvent } = calendarSlice.actions;
+
+export const selectCurrentMonthName = (state) => {
+    const days = state.calendar && state.calendar.days ? state.calendar.days : {};
+    const keys = Object.keys(days);
+    if (keys.length === 0) {
+        const now = new Date();
+        return now.toLocaleString('he', { month: 'long' });
+    }
+
+    const todayKey = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+    const chosenKey = keys.includes(todayKey) ? todayKey : keys.sort()[0];
+    const entry = days[chosenKey];
+
+    // Return the Gregorian month name derived from the YYYY-MM-DD key
+    try {
+        const dateObj = new Date(chosenKey);
+        if (!Number.isNaN(dateObj.getTime())) {
+            return dateObj.toLocaleString('he', { month: 'long' });
+        }
+    } catch (e) { }
+
+    // Fallbacks: prefer Hebrew month if present, or generic locale fallback
+    if (entry && entry.heDateParts && entry.heDateParts.m) return entry.heDateParts.m;
+    if (entry && entry.hm) return entry.hm;
+
+    return new Date().toLocaleString('he', { month: 'long' });
+};
+
+export const selectCurrentYear = (state) => {
+    const days = state.calendar && state.calendar.days ? state.calendar.days : {};
+    const keys = Object.keys(days);
+    if (keys.length === 0) return new Date().getFullYear();
+
+    const todayKey = new Date().toISOString().slice(0, 10);
+    const chosenKey = keys.includes(todayKey) ? todayKey : keys.sort()[0];
+
+    // Extract gregorian year from the YYYY-MM-DD key
+    const gregYear = parseInt(chosenKey.slice(0, 4), 10);
+    if (!Number.isNaN(gregYear)) return gregYear;
+
+    // Fallback to current year
+    return new Date().getFullYear();
+};
+
 export default calendarSlice.reducer;
