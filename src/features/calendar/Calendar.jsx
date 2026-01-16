@@ -1,6 +1,6 @@
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 
 import "./Calendar.css"
 import Day from "./Day";
@@ -12,7 +12,6 @@ export default function Calendar() {
     const { month, year } = useParams();
 
     const days = useSelector((state) => state.calendar.days);
-    // const monthName = useSelector((state) => state.calendar.monthName);
     const dispatch = useDispatch();
     const [daysToShow, setDaysToShow] = useState([]);
 
@@ -21,7 +20,7 @@ export default function Calendar() {
         dispatch(fetchDates(currentMonth));
     }, [dispatch, month, year]);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const dates = Object.keys(days);
 
         const firstDate = new Date(dates[0]);
