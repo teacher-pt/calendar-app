@@ -47,7 +47,6 @@ export default function Calendar() {
 
     return (
         <div className="calendar-wrapper" dir="rtl">
-            {/* {monthName} */}
             <div className="calendar__header" aria-hidden>
                 {WEEKDAYS_HE.map((w, i) => (
                     <div key={i} className="calendar__header-cell">
