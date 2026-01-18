@@ -4,11 +4,13 @@ import { useSelector } from 'react-redux';
 import './App.css'
 import Calendar from '../calendar/Calendar'
 import CurrentMonth from '../calendar/CurrentMonth';
-import { selectCurrentMonthName, selectCurrentYear } from '../calendar/calendarSlice';
 
 function App() {
-    const monthName = useSelector(selectCurrentMonthName);
-    const year = useSelector(selectCurrentYear);
+    const days = useSelector((state) => state.calendar.days);
+
+    const firstDay = Object.keys(days).sort()[0];
+    const monthName = firstDay ? new Date(firstDay).toLocaleString('he', { month: 'long' }) : '';
+    const year = firstDay ? new Date(firstDay).getFullYear() : new Date().getFullYear();
 
     return (
         <>
