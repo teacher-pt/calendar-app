@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useLayoutEffect, useState } from "react";
 
@@ -45,8 +45,25 @@ export default function Calendar() {
         setDaysToShow([...prevMonth, ...Object.entries(days), ...nextMonth]);
     }, [days]);
 
+    function formatDateMY(deltaMonth = 0) {
+        const date = new Date(+year, +month + deltaMonth);
+        return `${date.getMonth() + 1}/${date.getFullYear()}`;
+    }
+
     return (
         <div className="calendar-wrapper" dir="rtl">
+            <Link
+                className="calendar-nav calendar-nav--prev"
+                aria-label="חודש קודם"
+                to={`/calendar/${formatDateMY(-1)}`}>
+                ‹
+            </Link>
+            <Link
+                className="calendar-nav calendar-nav--next"
+                aria-label="חודש הבא"
+                to={`/calendar/${formatDateMY(1)}`}>
+                ›
+            </Link>
             <div className="calendar__header" aria-hidden>
                 {WEEKDAYS_HE.map((w, i) => (
                     <div key={i} className="calendar__header-cell">

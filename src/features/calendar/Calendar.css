@@ -12,6 +12,42 @@
     /* right-to-left layout */
 }
 
+.calendar-wrapper {
+    position: relative;
+    overflow: visible;
+    padding-left: 28px;
+    padding-right: 28px;
+}
+
+.calendar-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #fff;
+    border: 1px solid #ddd;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    font-size: 20px;
+}
+
+.calendar-nav--prev {
+    right: 6px;
+}
+
+.calendar-nav--next {
+    left: 6px;
+}
+
+.calendar-nav:hover {
+    background: #f6f6f6;
+}
+
 .calendar__header {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
