@@ -46,7 +46,6 @@ export const fetchDates = createAsyncThunk(
     }
 );
 
-export const { addEvent, removeEvent } = calendarSlice.actions;
 
 export const selectCurrentMonthName = (state) => {
     const days = state.calendar && state.calendar.days ? state.calendar.days : {};
@@ -66,7 +65,7 @@ export const selectCurrentMonthName = (state) => {
         if (!Number.isNaN(dateObj.getTime())) {
             return dateObj.toLocaleString('he', { month: 'long' });
         }
-    } catch (e) { 
+    } catch (e) {
         console.error("Error parsing date:", e);
     }
 
@@ -92,5 +91,7 @@ export const selectCurrentYear = (state) => {
     // Fallback to current year
     return new Date().getFullYear();
 };
+
+export const { addEvent, removeEvent } = calendarSlice.actions;
 
 export default calendarSlice.reducer;
