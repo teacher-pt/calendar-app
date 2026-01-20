@@ -9,10 +9,6 @@
 
 .calendar-wrapper {
     direction: rtl;
-    /* right-to-left layout */
-}
-
-.calendar-wrapper {
     position: relative;
     overflow: visible;
     padding-left: 28px;
@@ -37,10 +33,12 @@
 }
 
 .calendar-nav--prev {
+    position: fixed;
     right: 6px;
 }
 
 .calendar-nav--next {
+    position: fixed;
     left: 6px;
 }
 

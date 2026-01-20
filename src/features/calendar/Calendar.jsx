@@ -51,7 +51,7 @@ export default function Calendar() {
     }
 
     return (
-        <div className="calendar-wrapper" dir="rtl">
+        <div className="calendar-wrapper">
             <Link
                 className="calendar-nav calendar-nav--prev"
                 aria-label="חודש קודם"
