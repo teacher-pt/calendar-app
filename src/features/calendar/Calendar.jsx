@@ -46,7 +46,7 @@ export default function Calendar() {
     }, [days]);
 
     function formatDateMY(deltaMonth = 0) {
-        const date = new Date(+year, +month + deltaMonth);
+        const date = new Date(+year, +month + deltaMonth - 1);
         return `${date.getMonth() + 1}/${date.getFullYear()}`;
     }
 
